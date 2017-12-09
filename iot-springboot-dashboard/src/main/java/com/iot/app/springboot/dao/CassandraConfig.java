@@ -13,18 +13,18 @@ import org.springframework.data.cassandra.repository.config.EnableCassandraRepos
 
 /**
  * Spring bean configuration for Cassandra db.
- * 
- * @author abaghel
  *
+ * @author abaghel
  */
 @Configuration
 @PropertySource(value = {"classpath:iot-springboot.properties"})
 @EnableCassandraRepositories(basePackages = {"com.iot.app.springboot.dao"})
-public class CassandraConfig extends AbstractCassandraConfiguration{
-	
+public class CassandraConfig extends AbstractCassandraConfiguration {
+
     @Autowired
     private Environment environment;
-    
+
+    @Override
     @Bean
     public CassandraClusterFactoryBean cluster() {
         CassandraClusterFactoryBean cluster = new CassandraClusterFactoryBean();
@@ -32,15 +32,16 @@ public class CassandraConfig extends AbstractCassandraConfiguration{
         cluster.setPort(Integer.parseInt(environment.getProperty("com.iot.app.cassandra.port")));
         return cluster;
     }
-  
+
+    @Override
     @Bean
-    public CassandraMappingContext cassandraMapping(){
-         return new BasicCassandraMappingContext();
+    public CassandraMappingContext cassandraMapping() {
+        return new BasicCassandraMappingContext();
     }
-    
-	@Override
-	@Bean
-	protected String getKeyspaceName() {
-		return environment.getProperty("com.iot.app.cassandra.keyspace");
-	}
+
+    @Override
+    @Bean
+    protected String getKeyspaceName() {
+        return environment.getProperty("com.iot.app.cassandra.keyspace");
+    }
 }

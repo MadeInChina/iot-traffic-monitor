@@ -7,19 +7,20 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 
 /**
- * Web-Socket message broker configuration class to send data using SockJS 
+ * Web-Socket message broker configuration class to send data using SockJS
  * to dashboard html page.
- * 
- * @author abaghel
  *
+ * @author abaghel
  */
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
-	//sockJS can get message using this endpoint
+    //sockJS can get message using this endpoint
+    @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/stomp").withSockJS();
     }
+
     //configure message broker
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
